@@ -15,11 +15,11 @@ public class UserApplicationService {
 	private MessageSource messageSource;
 
 	/* 性別のマップ作成 */
-	public Map<String, Integer> getGenderMap() {
+	public Map<String, Integer> getGenderMap(Locale locale) {
 		Map<String, Integer> genderMap = new LinkedHashMap<>();
 		
-		String male = messageSource.getMessage("male",null,Locale.JAPAN);
-		String female = messageSource.getMessage("female", null,Locale.JAPAN);//locale＝地域
+		String male = messageSource.getMessage("male",null,locale);
+		String female = messageSource.getMessage("female", null,locale);//locale＝地域
 	
 		genderMap.put(male, 1);
 		genderMap.put(female, 2);
