@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http//www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+	<!-- どのレイアウトにdecorateのHTMLを組み込むか指定 -->
+<!-- tymeleafでレイアウト使用 -->
+<head>
+</head>
+<body>
+	<!-- fragmentレイアウトがわのHTMLから参照されるキー名を指定(::header) -->
+	<nav layout:fragment="header"
+		class="navbar navbar-inverse navbar-fixed-top navbar-dark bg-dark">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">SpringSmple</a>
+			</div>
+			<form method="post" th:action="@{/logout}">
+				<button class="btn btn-link pull-right navbar-brand" type="submit">ログアウト
+				</button>
+			</form>
+		</div>
+	</nav>
+</body>
+</html>
