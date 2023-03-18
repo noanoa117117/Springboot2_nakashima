@@ -4,7 +4,7 @@
 <!-- UserMapperとxmlのマッピング -->
 <mapper namespace="com.example.repository.UserMapper">
 
-	<!-- マッピング定義 resultMap=select結果とjavaクラスをマッピング,Id=は任意だがresultMapと-->
+	<!-- マッピング定義 resultMap=select結果とjavaクラスをマッピング,Id=は任意だがresultMapと -->
 	<resultMap type="com.example.domain.user.model.MUser"
 		id="user">
 		<!-- column=select結果のカラム名,property=Javaクラスのフィールド名 -->
@@ -47,16 +47,35 @@
 		select
 		*
 		from
-			m_user
+		m_user
 	</select>
 
-	<!-- ユーザー一件検索 resultMap=の値は上のIdの値と一致させる-->
+	<!-- ユーザー一件検索 resultMap=の値は上のIdの値と一致させる -->
 	<select id="findOne" resultMap="user">
 		select
 		*
 		from
-			m_user
+		m_user
 		where
-			user_id = #{userId}
+		user_id = #{userId}
 	</select>
+
+	<!-- ユーザー一件更新 @paramで指定した値をSQL内に埋め込める #{パラメータ}-->
+	<update id="updateOne">
+		update
+		m_user
+		set
+		password = #{password}
+		,user_name = #{userName}
+		where
+		user_id = #{userId}
+	</update>
+	<!-- ユーザー一件削除 -->
+	<delete id="deleteOne">
+		delete from
+		m_user
+		where
+		user_id = #{userId}
+	</delete>
+
 </mapper>
