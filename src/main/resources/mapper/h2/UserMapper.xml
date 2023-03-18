@@ -16,13 +16,26 @@
 		<result column="gender" property="gender" />
 		<result column="department_Id" property="departmentId" />
 		<result column="role" property="role" />
+		<!-- association は1つのテーブルと結合 -->
 		<association property="department" resultMap="department"></association>
+		<!-- マッピング定義内に別のマッピング定義を入れれる,columnPrefixカラム名の重複を避けるために別名をつける -->
+		<collection property="salaryList" resultMap="salary"
+			columnPrefix="salary_" />
 	</resultMap>
-	
+
 	<!-- マッピング定義(部署 -->
-	<resultMap type="com.example.domain.user.model.Department" id="department">
-		<id column ="department_id" property="departmentId"/>
-		<result column="department_name" property="departmentName"/>
+	<resultMap type="com.example.domain.user.model.Department"
+		id="department">
+		<id column="department_id" property="departmentId" />
+		<result column="department_name" property="departmentName" />
+	</resultMap>
+
+	<!-- マッピング定義(給料) -->
+	<resultMap type="com.example.domain.user.model.Salary"
+		id="salary">
+		<id column="user_id" property="userId" />
+		<id column="year_month" property="yearMonth" />
+		<result column="salary" property="salary" />
 	</resultMap>
 
 	<!-- ユーザー一件登録 -->
@@ -49,7 +62,7 @@
 		)
 	</insert>
 
-	<!-- ユーザー複数取得 where句のifが1つでもtrueならwhereを追加-->
+	<!-- ユーザー複数取得 where句のifが1つでもtrueならwhereを追加 -->
 	<select id="findMany" resultType="MUser">
 		select
 		*
@@ -68,13 +81,29 @@
 	<!-- ユーザー一件検索 resultMap=の値は上のIdの値と一致させる -->
 	<select id="findOne" resultMap="user">
 		select
-		*
+		m_user.user_id
+		,m_user.password
+		,m_user.user_name
+		,m_user.birthday
+		,m_user.age
+		,m_user.gender
+		,m_department.department_id
+		,m_department.department_name
+		
+		,t_salary.user_id as salary_user_id
+		,t_salary.year_month as salary_year_month
+		,t_salary.salary as salary_salary
 		from
 		m_user
-		left join m_department
-			on m_user.department_id = m_department.department_id
+		left join
+		m_department
+		on
+		m_user.department_id = m_department.department_id
+		left join t_salary
+		on
+		m_user.user_id = t_salary.user_id
 		where
-		user_id =
+		m_user.user_id =
 		#{userId}
 	</select>
 
