@@ -42,12 +42,20 @@
 		)
 	</insert>
 
-	<!-- ユーザー複数取得 -->
+	<!-- ユーザー複数取得 where句のifが1つでもtrueならwhereを追加-->
 	<select id="findMany" resultType="MUser">
 		select
 		*
 		from
 		m_user
+		<where>
+			<if test="userId != null">
+				user_id like '%' || #{userId} || '%'
+			</if>
+			<if test="userName != null">
+				and user_name like '%' || #{userName} || '%'
+			</if>
+		</where>
 	</select>
 
 	<!-- ユーザー一件検索 resultMap=の値は上のIdの値と一致させる -->
@@ -57,16 +65,18 @@
 		from
 		m_user
 		where
-		user_id = #{userId}
+		user_id =
+		#{userId}
 	</select>
 
-	<!-- ユーザー一件更新 @paramで指定した値をSQL内に埋め込める #{パラメータ}-->
+	<!-- ユーザー一件更新 @paramで指定した値をSQL内に埋め込める #{パラメータ} -->
 	<update id="updateOne">
 		update
 		m_user
 		set
 		password = #{password}
-		,user_name = #{userName}
+		,user_name =
+		#{userName}
 		where
 		user_id = #{userId}
 	</update>
