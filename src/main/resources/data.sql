@@ -9,7 +9,7 @@ INSERT INTO m_user(
 	,birthday
 	,age
 	,gender
-	,department_Id
+	,department_id
 	,role
 )VALUES
 ('system@co.jp','password','システム管理者','2000-01-01',21,1,1,'ROLE_ADMIN')

@@ -11,5 +11,8 @@ public interface UserService {
 		
 		/*ユーザー取得	 */
 		public List<MUser> getUsers();
+		
+		/*ユーザー取得(一件)*/
+		public MUser getUserOne(String userId);
 	}
 
